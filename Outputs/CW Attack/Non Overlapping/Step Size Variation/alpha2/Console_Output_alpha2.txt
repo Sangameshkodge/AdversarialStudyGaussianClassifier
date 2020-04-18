@@ -1,0 +1,16 @@
+
+
+Iter:alpha_0.0002_stride_8_iter_10
+ norm:9.080844100745432 
+ # of cat pixels:43.0 
+ # of grass pixels:2886.6875
+ MAE Loss:0.0002787487230203085
+ Change:0.9728370297363815
+
+
+Iter:alpha_0.0002_stride_8_final
+ norm:9.479276695937246 
+ # of cat pixels:0.0 
+ # of grass pixels:2929.6875
+ MAE Loss:3.702030953038711e-06
+

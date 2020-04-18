@@ -1,0 +1,7 @@
+
+
+Iter:alpha_0.0001_stride_8_final
+ norm:8.694476798384487 
+ # of cat pixels:0.0 
+ # of grass pixels:2929.6875
+ MAE Loss:3.702030953038711e-06

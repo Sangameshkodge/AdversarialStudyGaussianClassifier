@@ -1,0 +1,32 @@
+
+
+Iter:lamda_10_stride_8_iter_5
+ norm:5.618616966442738 
+ # of cat pixels:286.0 
+ # of grass pixels:2643.6875
+ MAE Loss:0.0007188168210808175
+ Change:1.2594742046614653
+
+
+Iter:lamda_10_stride_8_iter_10
+ norm:9.08671101184107 
+ # of cat pixels:43.0 
+ # of grass pixels:2886.6875
+ MAE Loss:0.0002787487230203085
+ Change:0.9741192833441225
+
+
+Iter:lamda_10_stride_8_iter_15
+ norm:9.48059984492276 
+ # of cat pixels:1.0 
+ # of grass pixels:2928.6875
+ MAE Loss:4.265998248685479e-05
+ Change:0.08421623200478529
+
+
+Iter:lamda_10_stride_8_final
+ norm:9.485932661881172 
+ # of cat pixels:0.0 
+ # of grass pixels:2929.6875
+ MAE Loss:3.702030953038711e-06
+

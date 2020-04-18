@@ -44,6 +44,7 @@ for i in range(len(display)):
                               display_iter=disp, 
                               stride=stride, 
                               title="lamda_{}_stride_{}_".format(l,stride))
+    
     display_image(img_perturbed = img_perturbed, 
                   mean_cat=mean_cat, 
                   cov_cat=cov_cat, 

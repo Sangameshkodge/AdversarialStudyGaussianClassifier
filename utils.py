@@ -74,20 +74,27 @@ def gradient(patch_vec_k, patch_vec_0, mean_cat, cov_cat, pi_cat, mean_grass,cov
     
 #function that analysis the data and displays the images
 def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, original_img, truth, title='', stride = 8):
-    img_infer = inference (img_perturbed, mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, stride= stride)
+    img_infer = inference ( img=img_perturbed, 
+                            mean_cat=mean_cat, 
+                            cov_cat=cov_cat, 
+                            pi_cat=pi_cat, 
+                            mean_grass=mean_grass,
+                            cov_grass=cov_grass, 
+                            pi_grass=pi_grass,
+                            stride= stride)
     noise_perturbed = (original_img-img_perturbed)+0.5
-#    plt.figure(figsize=(5,5))
-#    plt.title("Perturbed Image")
-#    plt.imsave('./Outputs/Perturbed_'+ title + '.png', img_perturbed*255,cmap='gray')
-#    plt.close()
-#    plt.figure(figsize=(5,5))
-#    plt.title("Perturbation")
-#    plt.imsave('./Outputs/noise_'+ title + '.png', noise_perturbed*255,cmap='gray')
-#    plt.close()
-#    plt.figure(figsize=(5,5))
-#    plt.title("Classifier Output")
-#    plt.imsave('./Outputs/inference_'+ title + '.png', img_infer*255,cmap='gray')
-#    plt.close()
+    plt.figure(figsize=(5,5))
+    plt.title("Perturbed Image")
+    plt.imsave('./Outputs/Perturbed_'+ title + '.png', img_perturbed*255,cmap='gray')
+    plt.close()
+    plt.figure(figsize=(5,5))
+    plt.title("Perturbation")
+    plt.imsave('./Outputs/noise_'+ title + '.png', noise_perturbed*255,cmap='gray')
+    plt.close()
+    plt.figure(figsize=(5,5))
+    plt.title("Classifier Output")
+    plt.imsave('./Outputs/inference_'+ title + '.png', img_infer*255,cmap='gray')
+    plt.close()
     norm = np.linalg.norm(noise_perturbed-0.5)
     cat_count = (img_infer==1).sum()/(stride*stride)
     grass_count = (img_infer==0).sum()/(stride*stride)

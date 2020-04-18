@@ -1,0 +1,14 @@
+
+
+Iter:NonAttackNonOverlap
+ norm:0.0 
+ # of cat pixels:575.0 
+ # of grass pixels:2354.6875
+ MAE Loss:0.0010202777135819505
+
+
+Iter:NonAttackOverlap
+ norm:0.0 
+ # of cat pixels:36344.0 
+ # of grass pixels:151156.0
+ MAE Loss:0.0010138634870820616

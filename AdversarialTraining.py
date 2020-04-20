@@ -8,8 +8,9 @@ Created on Sun Apr 19 20:07:08 2020
 
 import numpy as np
 import matplotlib.pyplot as plt
-from attack_utils import CW_attack_fast, display_image, mean_cov
-from defense_utils import Adv_training_data
+from attack import CW_attack_fast
+from utils import display_image, mean_cov
+from defense import Adv_training_data
 import argparse
 
 def str2bool(v):
@@ -24,7 +25,7 @@ def str2bool(v):
 parser = argparse.ArgumentParser(description='Defense for CW attack on Gaussian classifier', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--n_bits',              default=8,      type=int,     help='Number of bits of quantization')
 parser.add_argument('--quantize',            default=True,    type=str2bool,   help='Source Model')
-parser.add_argument('--stride',              default=8,    type=int,   help='1 for overlapping case 8 for non overlapping case')
+parser.add_argument('--stride',              default=1,    type=int,   help='1 for overlapping case 8 for non overlapping case')
 global args
 args = parser.parse_args()
 print(args)
@@ -42,8 +43,8 @@ truth = plt.imread ('./dataset/truth.png')/255
 mean_cat,cov_cat, pi_cat = mean_cov(train_cat,train_grass)
 mean_grass,cov_grass, pi_grass = mean_cov(train_grass,train_cat)
 
-Lamda = [5]
-Alpha = [0.0001]
+Lamda = [0.5, 1, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+Alpha = [0.0001, 0.0002, 0.0003]
 
 augmented_cat =train_cat
 augmented_grass = train_grass
@@ -58,7 +59,7 @@ for l in Lamda:
                                             pi_grass=pi_grass, 
                                             l=l, 
                                             target_index=1, 
-                                            stride=8, 
+                                            stride=args.stride, 
                                             alpha=a)
         
         adv_train_grass = Adv_training_data(training_data=train_grass,
@@ -70,14 +71,13 @@ for l in Lamda:
                                             pi_grass=pi_grass, 
                                             l=l, 
                                             target_index=1, 
-                                            stride=8, 
+                                            stride=args.stride, 
                                             alpha=a)
-#        augmented_cat = np.concatenate((augmented_cat, adv_train_cat), axis=1)
-#        augmented_grass = np.concatenate((augmented_grass, adv_train_cat), axis=1)
-#        mean_cat,cov_cat, pi_cat = mean_cov(augmented_cat,augmented_grass)
-#        mean_grass,cov_grass, pi_grass = mean_cov(augmented_grass,augmented_cat)
-        mean_cat,cov_cat, pi_cat = mean_cov(adv_train_cat,adv_train_grass)
-        mean_grass,cov_grass, pi_grass = mean_cov(adv_train_grass,adv_train_cat)
+        augmented_cat = np.concatenate((augmented_cat, adv_train_cat), axis=1)
+        augmented_grass = np.concatenate((augmented_grass, adv_train_cat), axis=1)
+        mean_cat,cov_cat, pi_cat = mean_cov(augmented_cat,augmented_grass)
+        mean_grass,cov_grass, pi_grass = mean_cov(augmented_grass,augmented_cat)
+        
 
 
 
@@ -92,7 +92,7 @@ display_image(img_perturbed = Y,
               original_img = Y,
               truth = truth,
               title="NonAttackNonOverlap", 
-              stride=8,
+              stride=args.stride,
               save=False, 
               infer=True)  
 

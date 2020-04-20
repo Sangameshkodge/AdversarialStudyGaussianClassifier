@@ -7,7 +7,8 @@ Created on Sun Apr 12 22:25:12 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from attack_utils import display_image, mean_cov, CW_attack_fast
+from utils import display_image, mean_cov
+from attack import CW_attack_fast
 
 #loading the training dataset
 train_cat=np.matrix(np.loadtxt('./dataset/train_cat.txt',delimiter=','))
@@ -24,6 +25,23 @@ mean_grass,cov_grass, pi_grass = mean_cov(train_grass,train_cat)
 
 # non overlaping
 stride = 8 
+
+
+#Inference
+display_image(img_perturbed = Y, 
+              mean_cat=mean_cat, 
+              cov_cat=cov_cat, 
+              pi_cat=pi_cat, 
+              mean_grass=mean_grass,
+              cov_grass=cov_grass, 
+              pi_grass=pi_grass,
+              original_img = Y,
+              truth = truth,
+              title="NonAttackNonOverlap", 
+              stride= stride,
+              save=False, 
+              infer=True)  
+
 
 ### Analysis for Lamda variation
 display = [50, 10, 5]

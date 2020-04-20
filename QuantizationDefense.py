@@ -7,8 +7,9 @@ Created on Sun Apr 19 18:22:37 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from attack_utils import CW_attack_fast, display_image, mean_cov
-from defense_utils import Quantize
+from attack import CW_attack_fast
+from utils import display_image, mean_cov
+from defense import Quantize
 import argparse
 
 def str2bool(v):
@@ -23,7 +24,7 @@ def str2bool(v):
 parser = argparse.ArgumentParser(description='Defense for CW attack on Gaussian classifier', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--n_bits',              default=8,      type=int,     help='Number of bits of quantization')
 parser.add_argument('--quantize',            default=True,    type=str2bool,   help='Source Model')
-parser.add_argument('--stride',              default=8,    type=int,   help='1 for overlapping case 8 for non overlapping case')
+parser.add_argument('--stride',              default=1,    type=int,   help='1 for overlapping case 8 for non overlapping case')
 global args
 args = parser.parse_args()
 print(args)
@@ -53,7 +54,7 @@ display_image(img_perturbed = Y,
               original_img = Y,
               truth = truth,
               title="NonAttackNonOverlap", 
-              stride=8,
+              stride=args.stride,
               save=False, 
               infer=True)  
 

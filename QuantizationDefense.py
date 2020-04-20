@@ -7,7 +7,7 @@ Created on Sun Apr 19 18:22:37 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from attack_utils import CW_attack, display_image, mean_cov
+from attack_utils import CW_attack_fast, display_image, mean_cov
 from defense_utils import Quantize
 import argparse
 
@@ -69,20 +69,20 @@ for i in range(len(display)):
     l = lam[i]
     disp = display[i] 
     a = alpha[i]
-    img_perturbed = CW_attack(img_0=Y, 
-                              mean_cat=mean_cat, 
-                              cov_cat=cov_cat, 
-                              pi_cat=pi_cat, 
-                              mean_grass=mean_grass,
-                              cov_grass=cov_grass, 
-                              pi_grass=pi_grass,
-                              original_img = Y,
-                              truth = truth,
-                              l=l, 
-                              alpha=a,
-                              display_iter=disp, 
-                              stride=stride, 
-                              title="lamda_{}_stride_{}_".format(l,stride))
+    img_perturbed = CW_attack_fast(   img_0=Y, 
+                                      mean_cat=mean_cat, 
+                                      cov_cat=cov_cat, 
+                                      pi_cat=pi_cat, 
+                                      mean_grass=mean_grass,
+                                      cov_grass=cov_grass, 
+                                      pi_grass=pi_grass,
+                                      original_img = Y,
+                                      truth = truth,
+                                      l=l, 
+                                      alpha=a,
+                                      display_iter=disp, 
+                                      stride=stride, 
+                                      title="lamda_{}_stride_{}_".format(l,stride))
     
     display_image(img_perturbed = img_perturbed, 
                   mean_cat=mean_cat, 

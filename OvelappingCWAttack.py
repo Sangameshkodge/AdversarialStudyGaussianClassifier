@@ -7,7 +7,7 @@ Created on Sun Apr 12 22:25:12 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from attack_utils import CW_attack, display_image, mean_cov
+from attack_utils import CW_attack_fast, display_image, mean_cov
 
 #loading the training dataset
 train_cat=np.matrix(np.loadtxt('./dataset/train_cat.txt',delimiter=','))
@@ -30,19 +30,19 @@ lam=[0.5, 1, 5]
 for i in range(len(display)): 
     l = lam[i]
     disp = display[i] 
-    img_perturbed = CW_attack(img_0=Y, 
-                              mean_cat=mean_cat, 
-                              cov_cat=cov_cat, 
-                              pi_cat=pi_cat, 
-                              mean_grass=mean_grass,
-                              cov_grass=cov_grass, 
-                              pi_grass=pi_grass,
-                              original_img = Y,
-                              truth = truth,
-                              l=l, 
-                              display_iter=disp, 
-                              stride=stride, 
-                              title="lamda_{}_stride_{}_".format(l,stride))
+    img_perturbed = CW_attack_fast(   img_0=Y, 
+                                      mean_cat=mean_cat, 
+                                      cov_cat=cov_cat, 
+                                      pi_cat=pi_cat, 
+                                      mean_grass=mean_grass,
+                                      cov_grass=cov_grass, 
+                                      pi_grass=pi_grass,
+                                      original_img = Y,
+                                      truth = truth,
+                                      l=l, 
+                                      display_iter=disp, 
+                                      stride=stride, 
+                                      title="lamda_{}_stride_{}_".format(l,stride))
     display_image(img_perturbed = img_perturbed, 
                   mean_cat=mean_cat, 
                   cov_cat=cov_cat, 
@@ -62,19 +62,19 @@ for i in range(len(display)):
     a = alpha[i]
     disp = display[i]
     
-    img_perturbed = CW_attack(img_0=Y, 
-                              mean_cat=mean_cat, 
-                              cov_cat=cov_cat, 
-                              pi_cat=pi_cat, 
-                              mean_grass=mean_grass,
-                              cov_grass=cov_grass, 
-                              pi_grass=pi_grass, 
-                              original_img = Y,
-                              truth = truth,
-                              alpha=a, 
-                              display_iter=disp, 
-                              stride=stride, 
-                              title="alpha_{}_stride_{}_".format(a,stride))
+    img_perturbed = CW_attack_fast(img_0=Y, 
+                                  mean_cat=mean_cat, 
+                                  cov_cat=cov_cat, 
+                                  pi_cat=pi_cat, 
+                                  mean_grass=mean_grass,
+                                  cov_grass=cov_grass, 
+                                  pi_grass=pi_grass, 
+                                  original_img = Y,
+                                  truth = truth,
+                                  alpha=a, 
+                                  display_iter=disp, 
+                                  stride=stride, 
+                                  title="alpha_{}_stride_{}_".format(a,stride))
     
     display_image(img_perturbed = img_perturbed, 
                   mean_cat=mean_cat, 

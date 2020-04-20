@@ -8,8 +8,8 @@ Created on Sun Apr 19 20:07:08 2020
 
 import numpy as np
 import matplotlib.pyplot as plt
-from attack_utils import CW_attack, display_image, mean_cov
-from defense_utils import Quantize, Adv_training_data
+from attack_utils import CW_attack_fast, display_image, mean_cov
+from defense_utils import Adv_training_data
 import argparse
 
 def str2bool(v):
@@ -42,7 +42,7 @@ truth = plt.imread ('./dataset/truth.png')/255
 mean_cat,cov_cat, pi_cat = mean_cov(train_cat,train_grass)
 mean_grass,cov_grass, pi_grass = mean_cov(train_grass,train_cat)
 
-Lamda = [1]
+Lamda = [5]
 Alpha = [0.0001]
 
 augmented_cat =train_cat
@@ -72,10 +72,14 @@ for l in Lamda:
                                             target_index=1, 
                                             stride=8, 
                                             alpha=a)
-        augmented_cat = np.concatenate((augmented_cat, adv_train_cat), axis=1)
-        augmented_grass = np.concatenate((augmented_grass, adv_train_cat), axis=1)
-        mean_cat,cov_cat, pi_cat = mean_cov(augmented_cat,augmented_grass)
-        mean_grass,cov_grass, pi_grass = mean_cov(augmented_grass,augmented_cat)
+#        augmented_cat = np.concatenate((augmented_cat, adv_train_cat), axis=1)
+#        augmented_grass = np.concatenate((augmented_grass, adv_train_cat), axis=1)
+#        mean_cat,cov_cat, pi_cat = mean_cov(augmented_cat,augmented_grass)
+#        mean_grass,cov_grass, pi_grass = mean_cov(augmented_grass,augmented_cat)
+        mean_cat,cov_cat, pi_cat = mean_cov(adv_train_cat,adv_train_grass)
+        mean_grass,cov_grass, pi_grass = mean_cov(adv_train_grass,adv_train_cat)
+
+
 
 #Inference
 display_image(img_perturbed = Y, 
@@ -104,20 +108,20 @@ for i in range(len(display)):
     l = lam[i]
     disp = display[i] 
     a = alpha[i]
-    img_perturbed = CW_attack(img_0=Y, 
-                              mean_cat=mean_cat, 
-                              cov_cat=cov_cat, 
-                              pi_cat=pi_cat, 
-                              mean_grass=mean_grass,
-                              cov_grass=cov_grass, 
-                              pi_grass=pi_grass,
-                              original_img = Y,
-                              truth = truth,
-                              l=l, 
-                              alpha=a,
-                              display_iter=disp, 
-                              stride=stride, 
-                              title="lamda_{}_stride_{}_".format(l,stride))
+    img_perturbed = CW_attack_fast(   img_0=Y, 
+                                      mean_cat=mean_cat, 
+                                      cov_cat=cov_cat, 
+                                      pi_cat=pi_cat, 
+                                      mean_grass=mean_grass,
+                                      cov_grass=cov_grass, 
+                                      pi_grass=pi_grass,
+                                      original_img = Y,
+                                      truth = truth,
+                                      l=l, 
+                                      alpha=a,
+                                      display_iter=disp, 
+                                      stride=stride, 
+                                      title="lamda_{}_stride_{}_".format(l,stride))
     
     display_image(img_perturbed = img_perturbed, 
                   mean_cat=mean_cat, 

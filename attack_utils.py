@@ -13,12 +13,12 @@ import matplotlib.pyplot as plt
 
 #function computing mean and covariance for gaussian classifier
 def mean_cov(A,B):
-    return np.mean(A,axis=1), np.cov(A), A.shape[1]/(A.shape[1]+B.shape[1])
+    return np.mean(A, axis=1), np.cov(A), A.shape[1]/(A.shape[1]+B.shape[1])
 
 
 #discriminant function fot gaussian classifier given mean, covariance and prior
 def discriminant(x,m,c,pi=1,d=64):
-    return -0.5*(x-m).T*np.linalg.pinv(c) *(x-m)- np.log(np.linalg.det(c))/2 +np.log(pi)  
+    return -0.5*np.diag((x-m).T*np.linalg.pinv(c)*(x-m))- np.log(np.linalg.det(c))/2 +np.log(pi)  
 
         
 
@@ -66,14 +66,15 @@ def gradient(patch_vec_k, patch_vec_0, mean_cat, cov_cat, pi_cat, mean_grass,cov
     else:
         raise ValueError ("Unsupported Target Index {}. Expect it to be 0 or 1 ".format(target_index))
     grad = np.zeros_like(patch_vec_0)
-    if g_target>g_not_target:
-        return grad
-    else:
-        grad = 2*(patch_vec_k-patch_vec_0)+ l*(np.matmul(W_not_target - W_target,patch_vec_k) + w_not_target-w_target)
-        return grad
-    
+    grad = np.where(g_target>g_not_target, grad, 2*(patch_vec_k-patch_vec_0)+ l*(np.matmul(W_not_target - W_target,patch_vec_k) + w_not_target-w_target))
+#   if g_target>g_not_target:
+#        return grad
+#    else:
+#        grad = 2*(patch_vec_k-patch_vec_0)+ l*(np.matmul(W_not_target - W_target,patch_vec_k) + w_not_target-w_target)
+#        return grad
+    return grad
 #function that analysis the data and displays the images
-def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, original_img, truth, title='', stride = 8):
+def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, original_img, truth, title='', stride = 8, save=True, infer=False):
     img_infer = inference ( img=img_perturbed, 
                             mean_cat=mean_cat, 
                             cov_cat=cov_cat, 
@@ -85,15 +86,30 @@ def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_gras
     noise_perturbed = (original_img-img_perturbed)+0.5
     plt.figure(figsize=(5,5))
     plt.title("Perturbed Image")
-    plt.imsave('./Outputs/Perturbed_'+ title + '.png', img_perturbed*255,cmap='gray')
+    if not(infer):
+        if save:
+            plt.imsave('./Outputs/Perturbed_'+ title + '.png', img_perturbed*255,cmap='gray')
+        else:
+        
+            plt.imshow(img_perturbed*255,cmap='gray', vmin=0, vmax=255)
+            plt.show()
     plt.close()
     plt.figure(figsize=(5,5))
     plt.title("Perturbation")
-    plt.imsave('./Outputs/noise_'+ title + '.png', noise_perturbed*255,cmap='gray')
+    if not(infer):
+        if save:
+            plt.imsave('./Outputs/noise_'+ title + '.png', noise_perturbed*255,cmap='gray')
+        else:
+            plt.imshow(noise_perturbed*255,cmap='gray', vmin=0, vmax=255)
+            plt.show()
     plt.close()
     plt.figure(figsize=(5,5))
     plt.title("Classifier Output")
-    plt.imsave('./Outputs/inference_'+ title + '.png', img_infer*255,cmap='gray')
+    if save:
+        plt.imsave('./Outputs/inference_'+ title + '.png', img_infer*255,cmap='gray')
+    else:
+        plt.imshow(img_infer*255,cmap='gray', vmin=0, vmax=255)
+        plt.show()
     plt.close()
     norm = np.linalg.norm(noise_perturbed-0.5)
     cat_count = (img_infer==1).sum()/(stride*stride)

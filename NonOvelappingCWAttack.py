@@ -7,7 +7,7 @@ Created on Sun Apr 12 22:25:12 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import CW_attack, display_image, mean_cov
+from attack_utils import CW_attack, display_image, mean_cov
 
 #loading the training dataset
 train_cat=np.matrix(np.loadtxt('./dataset/train_cat.txt',delimiter=','))

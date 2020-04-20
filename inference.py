@@ -7,7 +7,7 @@ Created on Sat Apr 18 13:17:41 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import mean_cov, display_image
+from attack_utils import mean_cov, display_image
 
 #loading the training dataset
 train_cat=np.matrix(np.loadtxt('./dataset/train_cat.txt',delimiter=','))
@@ -32,7 +32,8 @@ display_image(img_perturbed = Y,
               original_img = Y,
               truth = truth,
               title="NonAttackNonOverlap", 
-              stride=8)  
+              stride=8,
+              infer=True)  
 
 display_image(img_perturbed = Y, 
               mean_cat=mean_cat, 
@@ -44,4 +45,5 @@ display_image(img_perturbed = Y,
               original_img = Y,
               truth = truth,
               title="NonAttackOverlap", 
-              stride=1)  
+              stride=1,
+              infer=True)  

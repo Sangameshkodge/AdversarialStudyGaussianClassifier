@@ -1,0 +1,17 @@
+
+
+Iter:alpha_0.001_stride_8_iter_5
+ norm:15.208146048761067 
+ # of cat pixels:0.0 
+ # of grass pixels:2929.6875
+ Misprediction Count:33135
+ Change:0.43552582047616717
+
+
+Max Iteration:6
+Iter:alpha_0.001_stride_8_final
+ norm:15.208146048761067 
+ # of cat pixels:0.0 
+ # of grass pixels:2929.6875
+ Misprediction Count:33135
+

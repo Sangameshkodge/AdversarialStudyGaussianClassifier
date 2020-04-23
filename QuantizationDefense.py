@@ -22,9 +22,10 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 parser = argparse.ArgumentParser(description='Defense for CW attack on Gaussian classifier', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--n_bits',              default=8,      type=int,     help='Number of bits of quantization')
+parser.add_argument('--n_bits',              default=1,      type=int,     help='Number of bits of quantization')
 parser.add_argument('--quantize',            default=True,    type=str2bool,   help='Source Model')
 parser.add_argument('--stride',              default=1,    type=int,   help='1 for overlapping case 8 for non overlapping case')
+parser.add_argument('--attack_type',         default='blackbox',    type=str,   help='blackbox and whitebox attacks')
 global args
 args = parser.parse_args()
 print(args)
@@ -36,27 +37,57 @@ train_grass=np.matrix(np.loadtxt('./dataset/train_grass.txt',delimiter=','))
 
 #loading the test dataset
 Y = plt.imread ('./dataset/cat_grass.jpg')/255
-truth = plt.imread ('./dataset/truth.png')/255
+truth = plt.imread ('./dataset/truth.png')
 
 #computing the parameters for gaussian classifier (Training)
 q1 = Quantize(n_bits=args.n_bits, quantize=args.quantize)
-mean_cat,cov_cat, pi_cat = mean_cov(q1.forward(train_cat),q1.forward(train_grass))
-mean_grass,cov_grass, pi_grass = mean_cov(q1.forward(train_grass),q1.forward(train_cat))
+mean_cat_defense,cov_cat_defense, pi_cat_defense = mean_cov(q1.forward(train_cat),q1.forward(train_grass))
+mean_grass_defense,cov_grass_defense, pi_grass_defense = mean_cov(q1.forward(train_grass),q1.forward(train_cat))
+
+if args.attack_type.lower() == 'whitebox':
+    mean_cat_attack = mean_cat_defense
+    cov_cat_attack = cov_cat_defense
+    pi_cat_attack = pi_cat_defense
+    mean_grass_attack = mean_grass_defense
+    cov_grass_attack = cov_grass_defense
+    pi_grass_attack = pi_grass_defense
+elif args.attack_type.lower() == 'blackbox':        
+    mean_cat_attack,cov_cat_attack, pi_cat_attack = mean_cov(train_cat,train_grass)
+    mean_grass_attack,cov_grass_attack, pi_grass_attack = mean_cov(train_grass,train_cat)
+    print("Inference without Quantization")
+    #Inference
+    display_image(img_perturbed = Y, 
+                  mean_cat=mean_cat_attack, 
+                  cov_cat=cov_cat_attack, 
+                  pi_cat=pi_cat_attack, 
+                  mean_grass=mean_grass_attack,
+                  cov_grass=cov_grass_attack, 
+                  pi_grass=pi_grass_attack,
+                  original_img = Y,
+                  truth = truth,
+                  title="NonAttackNonDefense", 
+                  stride=args.stride,
+                  save=False, 
+                  infer=True) 
+else:
+    raise ValueError
 
 #Inference
+print("Inference with Quantization")
 display_image(img_perturbed = Y, 
-              mean_cat=mean_cat, 
-              cov_cat=cov_cat, 
-              pi_cat=pi_cat, 
-              mean_grass=mean_grass,
-              cov_grass=cov_grass, 
-              pi_grass=pi_grass,
+              mean_cat=mean_cat_defense, 
+              cov_cat=cov_cat_defense, 
+              pi_cat=pi_cat_defense, 
+              mean_grass=mean_grass_defense,
+              cov_grass=cov_grass_defense, 
+              pi_grass=pi_grass_defense,
               original_img = Y,
               truth = truth,
-              title="NonAttackNonOverlap", 
+              title="NonAttackDefense", 
               stride=args.stride,
               save=False, 
-              infer=True)  
+              infer=True, 
+              preprocessing=q1)  
 
 
 # non overlaping
@@ -71,30 +102,39 @@ for i in range(len(display)):
     disp = display[i] 
     a = alpha[i]
     img_perturbed = CW_attack_fast(   img_0=Y, 
-                                      mean_cat=mean_cat, 
-                                      cov_cat=cov_cat, 
-                                      pi_cat=pi_cat, 
-                                      mean_grass=mean_grass,
-                                      cov_grass=cov_grass, 
-                                      pi_grass=pi_grass,
+                                      mean_cat_attack=mean_cat_attack, 
+                                      cov_cat_attack=cov_cat_attack, 
+                                      pi_cat_attack=pi_cat_attack, 
+                                      mean_grass_attack=mean_grass_attack,
+                                      cov_grass_attack=cov_grass_attack, 
+                                      pi_grass_attack=pi_grass_attack,
+                                      mean_cat_defense = mean_cat_defense,
+                                      cov_cat_defense = cov_cat_defense,
+                                      pi_cat_defense = pi_cat_defense,
+                                      mean_grass_defense = mean_grass_defense,
+                                      cov_grass_defense = cov_grass_defense,
+                                      pi_grass_defense = pi_grass_defense,
                                       original_img = Y,
                                       truth = truth,
                                       l=l, 
                                       alpha=a,
                                       display_iter=disp, 
                                       stride=stride, 
-                                      title="lamda_{}_stride_{}_".format(l,stride))
+                                      title="lamda_{}_stride_{}_".format(l,stride), 
+                                      preprocessing=[None,None],
+                                      attack_type=args.attack_type)
     
-    display_image(img_perturbed = img_perturbed, 
-                  mean_cat=mean_cat, 
-                  cov_cat=cov_cat, 
-                  pi_cat=pi_cat, 
-                  mean_grass=mean_grass,
-                  cov_grass=cov_grass, 
-                  pi_grass=pi_grass,
+    display_image(img_perturbed = img_perturbed,  
+                  mean_cat=mean_cat_defense, 
+                  cov_cat=cov_cat_defense, 
+                  pi_cat=pi_cat_defense, 
+                  mean_grass=mean_grass_defense,
+                  cov_grass=cov_grass_defense, 
+                  pi_grass=pi_grass_defense,
                   original_img = Y,
                   truth = truth,
                   title="lamda_{}_stride_{}_final".format(l,stride), 
                   stride=stride, 
-                  save=False)     
+                  save=False,
+                  preprocessing=None)     
 

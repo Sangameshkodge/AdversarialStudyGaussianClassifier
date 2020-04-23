@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 ## Important functions to increase the speed of computation. 
 def parallel (img, stride=8):
-    #retruns the patch matrix 
+    #retruns the patch matrix for faster computation 
     dim1= len(range(4,img.shape[0]-4,stride))
     dim2= len(range (4,img.shape[1]-4,stride))
     rangei = range(4,img.shape[0]-4,stride)
@@ -57,25 +57,14 @@ def unparallel_grad(grad_parallel, img, stride=8):
                 j = rangej[idx_j]
                 grad_unparallel[i-4:i+4,j-4:j+4] += grad_parallel.T[dim2*idx_i+idx_j].reshape((8,8))
     return grad_unparallel
-#function computing mean and covariance for gaussian classifier
-def mean_cov(A,B):
-    return np.mean(A, axis=1), np.cov(A), A.shape[1]/(A.shape[1]+B.shape[1])
 
-
-#discriminant function fot gaussian classifier given mean, covariance and prior
-def discriminant(x,m,c,pi=1,d=64):
-    return -0.5*np.sum(np.multiply((x-m).T*np.linalg.pinv(c),(x-m).T), axis=1)- np.log(np.linalg.det(c))/2 +np.log(pi)  
-       
-#parameter of gaussian classifier 
-def get_parameters(m,c,pi=1):
-    W = -np.linalg.pinv(c)
-    w = np.matmul(np.linalg.pinv(c),m)
-    w_0 = -(0.5*np.matmul(np.matmul((m).T, np.linalg.inv(c) ),(m)) + 0.5*math.log(np.linalg.det(c)) - math.log(pi))
-    return W, w, w_0
-
-#computing loss for gaussian classifier
-def MAE(pred, target):
-    return    np.linalg.norm(pred-target)/(pred.shape[0]*pred.shape[1])
+#Testing the image Y using the gaussian classifier
+def inference_fast(img, mean_cat, cov_cat, pi_cat, mean_grass, cov_grass, pi_grass, stride=8):
+    output=np.zeros_like(img) # leaving the boundary pixels 0
+    parallel_img = parallel(img, stride=stride)
+    parallel_infer = np.where(discriminant(parallel_img,mean_cat,cov_cat,pi_cat) >  discriminant(parallel_img,mean_grass,cov_grass,pi_grass), np.ones((parallel_img.shape[1],1)), np.zeros((parallel_img.shape[1],1)))
+    output = unparallel_infer(parallel_infer.T, img, stride=stride)
+    return output
 
 # Carlini Wagner attack
 def gradient(patch_vec_k, patch_vec_0, mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, W_cat, w_cat, w_0_cat, W_grass, w_grass, w_0_grass, l=5, target_index=1):
@@ -103,17 +92,16 @@ def gradient(patch_vec_k, patch_vec_0, mean_cat, cov_cat, pi_cat, mean_grass,cov
     grad = np.zeros_like(patch_vec_0)
     grad = np.where( (g_target>g_not_target).T, grad, 2*(patch_vec_k-patch_vec_0)+ l*((np.matmul(W_not_target - W_target,patch_vec_k) + w_not_target-w_target)) )
     return grad
-#Testing the image Y using the gaussian classifier
-def inference_fast(img, mean_cat, cov_cat, pi_cat, mean_grass, cov_grass, pi_grass, stride=8):
-    output=np.zeros_like(img) # leaving the boundary pixels 0
-    parallel_img = parallel(img, stride=stride)
-    parallel_infer = np.where(discriminant(parallel_img,mean_cat,cov_cat,pi_cat) >  discriminant(parallel_img,mean_grass,cov_grass,pi_grass), np.ones((parallel_img.shape[1],1)), np.zeros((parallel_img.shape[1],1)))
-    output = unparallel_infer(parallel_infer.T, img, stride=stride)
-    return output
 
 #function that analysis the data and displays the images
-def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, original_img, truth, title='', stride = 8, save=True, infer=False):
-    img_infer = inference_fast ( img=img_perturbed, 
+def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, original_img, truth, path="./Outputs/",title='', stride = 8, save=True, infer=False, preprocessing=None):
+    
+    if preprocessing !=None:
+        img_perprocessed = preprocessing.forward(img_perturbed)
+    else : 
+        img_perprocessed = img_perturbed
+        
+    img_infer = inference_fast ( img=img_perprocessed, 
                             mean_cat=mean_cat, 
                             cov_cat=cov_cat, 
                             pi_cat=pi_cat, 
@@ -125,22 +113,22 @@ def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_gras
     norm = np.linalg.norm(noise_perturbed-0.5)
     cat_count = (img_infer==1).sum()/(stride*stride)
     grass_count = (img_infer==0).sum()/(stride*stride)
-    print("\n\nIter:{}\n norm:{} \n # of cat pixels:{} \n # of grass pixels:{}\n MAE Loss:{}".format(title, norm, cat_count, grass_count, MAE(img_infer,truth)) ) 
+    print("Iter:{}\n norm:{} \n # of cat pixels:{} \n # of grass pixels:{}\n Misprediction Count:{}".format(title, norm, cat_count, grass_count, misprediction_count(img_infer,truth)) ) 
     plt.figure(figsize=(5,5))
     plt.title("Perturbed Image")
     if not(infer):
         if save:
-            plt.imsave('./Outputs/Perturbed_'+ title + '.png', img_perturbed*255,cmap='gray')
+            plt.imsave(path+'Perturbed_'+ title + '.png', img_perturbed*255,cmap='gray')
         else:
         
             plt.imshow(img_perturbed*255,cmap='gray', vmin=0, vmax=255)
             plt.show()
     plt.close()
     plt.figure(figsize=(5,5))
-    plt.title("Perturbation")
+    plt.title("perturbation")
     if not(infer):
         if save:
-            plt.imsave('./Outputs/noise_'+ title + '.png', noise_perturbed*255,cmap='gray')
+            plt.imsave(path+'noise_'+ title + '.png', noise_perturbed*255,cmap='gray')
         else:
             plt.imshow(noise_perturbed*255,cmap='gray', vmin=0, vmax=255)
             plt.show()
@@ -148,12 +136,35 @@ def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_gras
     plt.figure(figsize=(5,5))
     plt.title("Classifier Output")
     if save:
-        plt.imsave('./Outputs/inference_'+ title + '.png', img_infer*255,cmap='gray')
+        plt.imsave(path+'inference_'+ title + '.png', img_infer*255,cmap='gray')
     else:
         plt.imshow(img_infer*255,cmap='gray', vmin=0, vmax=255)
         plt.show()
     plt.close()
     return
+
+#discriminant function fot gaussian classifier given mean, covariance and prior
+def discriminant(x,m,c,pi=1,d=64):
+    return -0.5*np.sum(np.multiply((x-m).T*np.linalg.pinv(c),(x-m).T), axis=1)- np.log(np.linalg.det(c))/2 +np.log(pi)  
+    
+#parameter of gaussian classifier 
+def get_parameters(m,c,pi=1):
+    W = -np.linalg.pinv(c)
+    w = np.matmul(np.linalg.pinv(c),m)
+    w_0 = -(0.5*np.matmul(np.matmul((m).T, np.linalg.inv(c) ),(m)) + 0.5*math.log(np.linalg.det(c)) - math.log(pi))
+    return W, w, w_0
+
+#function computing mean and covariance for gaussian classifier
+def mean_cov(A,B):
+    return np.mean(A, axis=1), np.cov(A), A.shape[1]/(A.shape[1]+B.shape[1])
+
+#computing loss for gaussian classifier
+def MAE(pred, target):
+    return    np.linalg.norm(pred-target)/(pred.shape[0]*pred.shape[1])
+
+
+def misprediction_count(pred, target):
+    return    (pred!=target).sum()
 
 #Testing the image Y using the gaussian classifier
 def inference(img, mean_cat, cov_cat, pi_cat, mean_grass, cov_grass, pi_grass, stride=8):
@@ -168,4 +179,11 @@ def inference(img, mean_cat, cov_cat, pi_cat, mean_grass, cov_grass, pi_grass, s
                     output[i-4:i+4 , j-4:j+4]=1
                 else:
                     raise ValueError
-    return output
+    return output   
+
+
+
+
+
+
+

@@ -16,7 +16,7 @@ train_grass=np.matrix(np.loadtxt('./dataset/train_grass.txt',delimiter=','))
 
 #loading the test dataset
 Y = plt.imread ('./dataset/cat_grass.jpg')/255
-truth = plt.imread ('./dataset/truth.png')/255
+truth = plt.imread ('./dataset/truth.png')
 
 #computing the parameters for gaussian classifier (Training)
 mean_cat,cov_cat, pi_cat = mean_cov(train_cat,train_grass)
@@ -54,6 +54,12 @@ for i in range(len(display)):
                                       mean_grass=mean_grass,
                                       cov_grass=cov_grass, 
                                       pi_grass=pi_grass,
+                                      mean_cat_infer = mean_cat,
+                                      cov_cat_infer = cov_cat,
+                                      pi_cat_infer = pi_cat,
+                                      mean_grass_infer = mean_grass,
+                                      cov_grass_infer = cov_grass,
+                                      pi_grass_infer = pi_grass,
                                       original_img = Y,
                                       truth = truth,
                                       l=l, 
@@ -86,6 +92,12 @@ for i in range(len(display)):
                                   mean_grass=mean_grass,
                                   cov_grass=cov_grass, 
                                   pi_grass=pi_grass, 
+                                  mean_cat_infer = mean_cat,
+                                  cov_cat_infer = cov_cat,
+                                  pi_cat_infer = pi_cat,
+                                  mean_grass_infer = mean_grass,
+                                  cov_grass_infer = cov_grass,
+                                  pi_grass_infer = pi_grass,
                                   original_img = Y,
                                   truth = truth,
                                   alpha=a, 

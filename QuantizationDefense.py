@@ -67,7 +67,7 @@ elif args.attack_type.lower() == 'blackbox':
                   truth = truth,
                   title="NonAttackNonDefense", 
                   stride=args.stride,
-                  save=False, 
+                  path="./Outputs/Defense/Quantization/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
                   infer=True) 
 else:
     raise ValueError
@@ -85,7 +85,7 @@ display_image(img_perturbed = Y,
               truth = truth,
               title="NonAttackDefense", 
               stride=args.stride,
-              save=False, 
+              path="./Outputs/Defense/Quantization/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
               infer=True, 
               preprocessing=q1)  
 
@@ -122,7 +122,8 @@ for i in range(len(display)):
                                       stride=stride, 
                                       title="lamda_{}_stride_{}_".format(l,stride), 
                                       preprocessing=[None,None],
-                                      attack_type=args.attack_type)
+                                      attack_type=args.attack_type,
+                                      path="./Outputs/Defense/Quantization/"+str(args.n_bits)+'bit/'+args.attack_type+'/')
     
     display_image(img_perturbed = img_perturbed,  
                   mean_cat=mean_cat_defense, 
@@ -135,6 +136,6 @@ for i in range(len(display)):
                   truth = truth,
                   title="lamda_{}_stride_{}_final".format(l,stride), 
                   stride=stride, 
-                  save=False,
+                  path="./Outputs/Defense/Quantization/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
                   preprocessing=None)     
 

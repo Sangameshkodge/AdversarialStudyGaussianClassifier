@@ -113,7 +113,8 @@ elif args.attack_type.lower() == 'blackbox':
                   truth = truth,
                   title="NonAttackNonDefense", 
                   stride=args.stride,
-                  save=False, 
+                  path="./Outputs/Defense/AdversarialTraining/"+args.attack_type+'/',
+                  save=True, 
                   infer=True) 
 else:
     raise ValueError
@@ -131,7 +132,8 @@ display_image(img_perturbed = Y,
               truth = truth,
               title="NonAttackDefenseNonOverlap", 
               stride=args.stride,
-              save=False, 
+              save=True, 
+              path="./Outputs/Defense/AdversarialTraining/"+args.attack_type+"/",
               infer=True)  
 # non overlaping
 stride = args.stride 
@@ -163,7 +165,9 @@ for i in range(len(display)):
                                       alpha=a,
                                       display_iter=disp, 
                                       stride=stride, 
-                                      title="lamda_{}_stride_{}_".format(l,stride))
+                                      title="lamda_{}_stride_{}_".format(l,stride),
+                                      path="./Outputs/Defense/AdversarialTraining/"+args.attack_type+"/"
+                                    )
     
     display_image(img_perturbed = img_perturbed, 
                   mean_cat=mean_cat_defense, 
@@ -176,5 +180,6 @@ for i in range(len(display)):
                   truth = truth,
                   title="lamda_{}_stride_{}_final".format(l,stride), 
                   stride=stride, 
-                  save=False)     
+                  path="./Outputs/Defense/AdversarialTraining/"+args.attack_type+"/"
+              )     
 

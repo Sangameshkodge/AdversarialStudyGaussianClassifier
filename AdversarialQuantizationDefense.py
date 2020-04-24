@@ -46,8 +46,8 @@ truth = plt.imread ('./dataset/truth.png')
 mean_cat,cov_cat, pi_cat = mean_cov(train_cat,train_grass)
 mean_grass,cov_grass, pi_grass = mean_cov(train_grass,train_cat)
 
-Lamda =  np.linspace (0,5.5,20)
-Alpha =  np.linspace (0.00002, 0.0003,20)
+Lamda =  np.linspace (0,5.5,10)
+Alpha =  np.linspace (0.00002, 0.0003,10)
 
 augmented_cat =train_cat
 augmented_grass = train_grass
@@ -117,7 +117,7 @@ elif args.attack_type.lower() == 'blackbox':
                   truth = truth,
                   title="NonAttackNonDefense", 
                   stride=args.stride,
-                  save=False, 
+                  path="./Outputs/Defense/AdversarialQuantize/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
                   infer=True) 
 else:
     raise ValueError
@@ -135,7 +135,7 @@ display_image(img_perturbed = Y,
               truth = truth,
               title="NonAttackDefense", 
               stride=args.stride,
-              save=False, 
+              path="./Outputs/Defense/AdversarialQuantize/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
               infer=True,
               preprocessing=q1)  
 
@@ -172,6 +172,7 @@ for i in range(len(display)):
                                       stride=stride, 
                                       title="lamda_{}_stride_{}_".format(l,stride), 
                                       preprocessing=[None,None],
+                                      path="./Outputs/Defense/AdversarialQuantize/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
                                       attack_type=args.attack_type)
     
     display_image(img_perturbed = img_perturbed,  
@@ -185,7 +186,7 @@ for i in range(len(display)):
                   truth = truth,
                   title="lamda_{}_stride_{}_final".format(l,stride), 
                   stride=stride, 
-                  save=False,
+                  path="./Outputs/Defense/AdversarialQuantize/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
                   preprocessing=None)     
 
 

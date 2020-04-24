@@ -14,7 +14,7 @@ def CW_attack_fast (img_0,
                     mean_cat_attack, cov_cat_attack, pi_cat_attack, mean_grass_attack,cov_grass_attack, pi_grass_attack,
                     mean_cat_defense, cov_cat_defense, pi_cat_defense, mean_grass_defense,cov_grass_defense, pi_grass_defense,
                     original_img, truth, 
-                    l=5, target_index=1, stride=8, alpha=0.0001, display_iter=300, title='',
+                    l=5, target_index=1, stride=8, alpha=0.0001, display_iter=300, title='',path= './Outputs',
                     preprocessing = [None,None], attack_type = 'blackbox'):
     iter_num=0
     parallel_img_0 =parallel(img_0, stride=stride)
@@ -63,7 +63,8 @@ def CW_attack_fast (img_0,
                           truth = truth,
                           title=title+'iter_'+str(iter_num), 
                           stride = stride, 
-                          preprocessing=preprocessing[1])
+                          preprocessing=preprocessing[1],
+                          path= path)
             
             print(' Change:{}'.format(change))
         if  change < 0.001 and stride == 8:

@@ -1,0 +1,492 @@
+Namespace(attack_type='whitebox', quantize=True, stride=1)
+Inference with Halftone
+Iter:NonAttackDefense
+ norm:0.0 
+ # of cat pixels:16782.0 
+ # of grass pixels:170718.0
+ Misprediction Count:21120
+
+
+Iter:lamda_1_stride_1_iter_5
+ norm:0.32782651420363546 
+ # of cat pixels:16783.0 
+ # of grass pixels:170717.0
+ Misprediction Count:21123
+ Change:0.06506716884707443
+
+
+Iter:lamda_1_stride_1_iter_10
+ norm:0.6454741950739337 
+ # of cat pixels:16785.0 
+ # of grass pixels:170715.0
+ Misprediction Count:21122
+ Change:0.06341189260764178
+
+
+Iter:lamda_1_stride_1_iter_15
+ norm:0.9562627312879455 
+ # of cat pixels:16785.0 
+ # of grass pixels:170715.0
+ Misprediction Count:21122
+ Change:0.06215347371793719
+
+
+Iter:lamda_1_stride_1_iter_20
+ norm:1.2609386275911978 
+ # of cat pixels:16785.0 
+ # of grass pixels:170715.0
+ Misprediction Count:21122
+ Change:0.061353414990340284
+
+
+Iter:lamda_1_stride_1_iter_25
+ norm:1.5603585568480292 
+ # of cat pixels:16774.0 
+ # of grass pixels:170726.0
+ Misprediction Count:21115
+ Change:0.06032578643488969
+
+
+Iter:lamda_1_stride_1_iter_30
+ norm:1.8545020318938799 
+ # of cat pixels:16785.0 
+ # of grass pixels:170715.0
+ Misprediction Count:21122
+ Change:0.060045167971726175
+
+
+Iter:lamda_1_stride_1_iter_35
+ norm:2.1430535509521675 
+ # of cat pixels:16774.0 
+ # of grass pixels:170726.0
+ Misprediction Count:21131
+ Change:0.05853304808208505
+
+
+Iter:lamda_1_stride_1_iter_40
+ norm:2.4261809123255293 
+ # of cat pixels:16771.0 
+ # of grass pixels:170729.0
+ Misprediction Count:21132
+ Change:0.058265721834754904
+
+
+Iter:lamda_1_stride_1_iter_45
+ norm:2.703969933287956 
+ # of cat pixels:16783.0 
+ # of grass pixels:170717.0
+ Misprediction Count:21120
+ Change:0.05689774383624433
+
+
+Iter:lamda_1_stride_1_iter_50
+ norm:2.9771427996236834 
+ # of cat pixels:16778.0 
+ # of grass pixels:170722.0
+ Misprediction Count:21115
+ Change:0.057189587335232044
+
+
+Iter:lamda_1_stride_1_iter_55
+ norm:3.2455317078191785 
+ # of cat pixels:16770.0 
+ # of grass pixels:170730.0
+ Misprediction Count:21135
+ Change:0.055977354221704294
+
+
+Iter:lamda_1_stride_1_iter_60
+ norm:3.5080865661117495 
+ # of cat pixels:16785.0 
+ # of grass pixels:170715.0
+ Misprediction Count:21122
+ Change:0.05516466746453995
+
+
+Iter:lamda_1_stride_1_iter_65
+ norm:3.7657307418592705 
+ # of cat pixels:16764.0 
+ # of grass pixels:170736.0
+ Misprediction Count:21113
+ Change:0.054344513901656545
+
+
+Iter:lamda_1_stride_1_iter_70
+ norm:4.017501898133218 
+ # of cat pixels:16779.0 
+ # of grass pixels:170721.0
+ Misprediction Count:21116
+ Change:0.053225178100640605
+
+
+Iter:lamda_1_stride_1_iter_75
+ norm:4.264558876170063 
+ # of cat pixels:16774.0 
+ # of grass pixels:170726.0
+ Misprediction Count:21129
+ Change:0.05210551590585315
+
+
+Iter:lamda_1_stride_1_iter_80
+ norm:4.508028735322401 
+ # of cat pixels:16782.0 
+ # of grass pixels:170718.0
+ Misprediction Count:21119
+ Change:0.05231288022927562
+
+
+Iter:lamda_1_stride_1_iter_85
+ norm:4.7476757722402745 
+ # of cat pixels:16785.0 
+ # of grass pixels:170715.0
+ Misprediction Count:21122
+ Change:0.050869167671366615
+
+
+Iter:lamda_1_stride_1_iter_90
+ norm:4.983390647969624 
+ # of cat pixels:16768.0 
+ # of grass pixels:170732.0
+ Misprediction Count:21119
+ Change:0.050652306476661475
+
+
+Iter:lamda_1_stride_1_iter_95
+ norm:5.214911901395724 
+ # of cat pixels:16761.0 
+ # of grass pixels:170739.0
+ Misprediction Count:21144
+ Change:0.04985856782781919
+
+
+Iter:lamda_1_stride_1_iter_100
+ norm:5.442773780826854 
+ # of cat pixels:16785.0 
+ # of grass pixels:170715.0
+ Misprediction Count:21122
+ Change:0.0492723963547561
+
+
+Iter:lamda_1_stride_1_iter_105
+ norm:5.666682067205265 
+ # of cat pixels:16772.0 
+ # of grass pixels:170728.0
+ Misprediction Count:21109
+ Change:0.04913100155339572
+
+
+Iter:lamda_1_stride_1_iter_110
+ norm:5.887159302807514 
+ # of cat pixels:16759.0 
+ # of grass pixels:170741.0
+ Misprediction Count:21128
+ Change:0.047933929452812475
+
+
+Iter:lamda_1_stride_1_iter_115
+ norm:6.102252972470111 
+ # of cat pixels:16775.0 
+ # of grass pixels:170725.0
+ Misprediction Count:21112
+ Change:0.04819412856897774
+
+
+Iter:lamda_1_stride_1_iter_120
+ norm:6.313462646631769 
+ # of cat pixels:16777.0 
+ # of grass pixels:170723.0
+ Misprediction Count:21128
+ Change:0.04712808401793623
+
+
+Iter:lamda_1_stride_1_iter_125
+ norm:6.520737781296283 
+ # of cat pixels:16772.0 
+ # of grass pixels:170728.0
+ Misprediction Count:21131
+ Change:0.046121242448652774
+
+
+Iter:lamda_1_stride_1_iter_130
+ norm:6.7249685617764445 
+ # of cat pixels:16767.0 
+ # of grass pixels:170733.0
+ Misprediction Count:21116
+ Change:0.04542543718752504
+
+
+Iter:lamda_1_stride_1_iter_135
+ norm:6.925915753373397 
+ # of cat pixels:16767.0 
+ # of grass pixels:170733.0
+ Misprediction Count:21132
+ Change:0.04682905901195345
+
+
+Iter:lamda_1_stride_1_iter_140
+ norm:7.123667160843305 
+ # of cat pixels:16775.0 
+ # of grass pixels:170725.0
+ Misprediction Count:21112
+ Change:0.04460083951104557
+
+
+Iter:lamda_1_stride_1_iter_145
+ norm:7.318886263977443 
+ # of cat pixels:16765.0 
+ # of grass pixels:170735.0
+ Misprediction Count:21136
+ Change:0.04471343315635276
+
+
+Iter:lamda_1_stride_1_iter_150
+ norm:7.511487263207807 
+ # of cat pixels:16758.0 
+ # of grass pixels:170742.0
+ Misprediction Count:21121
+ Change:0.043827565459954684
+
+
+Iter:lamda_1_stride_1_iter_155
+ norm:7.701288569348205 
+ # of cat pixels:16779.0 
+ # of grass pixels:170721.0
+ Misprediction Count:21129
+ Change:0.04352223876401425
+
+
+Iter:lamda_1_stride_1_iter_160
+ norm:7.887945106883852 
+ # of cat pixels:16767.0 
+ # of grass pixels:170733.0
+ Misprediction Count:21125
+ Change:0.044078547039535614
+
+
+Iter:lamda_1_stride_1_iter_165
+ norm:8.072066933811762 
+ # of cat pixels:16747.0 
+ # of grass pixels:170753.0
+ Misprediction Count:21158
+ Change:0.042814711116172334
+
+
+Iter:lamda_1_stride_1_iter_170
+ norm:8.253568801834279 
+ # of cat pixels:16759.0 
+ # of grass pixels:170741.0
+ Misprediction Count:21140
+ Change:0.04315084169253836
+
+
+Iter:lamda_1_stride_1_iter_175
+ norm:8.43322549070264 
+ # of cat pixels:16766.0 
+ # of grass pixels:170734.0
+ Misprediction Count:21129
+ Change:0.04290741717142896
+
+
+Iter:lamda_1_stride_1_iter_180
+ norm:8.610664854244583 
+ # of cat pixels:16782.0 
+ # of grass pixels:170718.0
+ Misprediction Count:21119
+ Change:0.042470598681197104
+
+
+Iter:lamda_1_stride_1_iter_185
+ norm:8.785727996946392 
+ # of cat pixels:16733.0 
+ # of grass pixels:170767.0
+ Misprediction Count:21148
+ Change:0.041068468349449536
+
+
+Iter:lamda_1_stride_1_iter_190
+ norm:8.958628475274224 
+ # of cat pixels:16756.0 
+ # of grass pixels:170744.0
+ Misprediction Count:21105
+ Change:0.04101932546607248
+
+
+Iter:lamda_1_stride_1_iter_195
+ norm:9.129492731917882 
+ # of cat pixels:16765.0 
+ # of grass pixels:170735.0
+ Misprediction Count:21140
+ Change:0.040919082326923505
+
+
+Iter:lamda_1_stride_1_iter_200
+ norm:9.298567418268737 
+ # of cat pixels:16756.0 
+ # of grass pixels:170744.0
+ Misprediction Count:21113
+ Change:0.04104199935296092
+
+
+Iter:lamda_1_stride_1_iter_205
+ norm:9.465723529379481 
+ # of cat pixels:16744.0 
+ # of grass pixels:170756.0
+ Misprediction Count:21137
+ Change:0.040776007814743546
+
+
+Iter:lamda_1_stride_1_iter_210
+ norm:9.631227245111907 
+ # of cat pixels:16769.0 
+ # of grass pixels:170731.0
+ Misprediction Count:21130
+ Change:0.03959719733730217
+
+
+Iter:lamda_1_stride_1_iter_215
+ norm:9.79492069996181 
+ # of cat pixels:16766.0 
+ # of grass pixels:170734.0
+ Misprediction Count:21140
+ Change:0.039304101002278914
+
+
+Iter:lamda_1_stride_1_iter_220
+ norm:9.956701849134161 
+ # of cat pixels:16766.0 
+ # of grass pixels:170734.0
+ Misprediction Count:21113
+ Change:0.03989097639592779
+
+
+Iter:lamda_1_stride_1_iter_225
+ norm:10.116269522814303 
+ # of cat pixels:16745.0 
+ # of grass pixels:170755.0
+ Misprediction Count:21132
+ Change:0.03954098115643536
+
+
+Iter:lamda_1_stride_1_iter_230
+ norm:10.274295158742344 
+ # of cat pixels:16772.0 
+ # of grass pixels:170728.0
+ Misprediction Count:21119
+ Change:0.03795972220553515
+
+
+Iter:lamda_1_stride_1_iter_235
+ norm:10.43073048770844 
+ # of cat pixels:16761.0 
+ # of grass pixels:170739.0
+ Misprediction Count:21130
+ Change:0.03790472421902271
+
+
+Iter:lamda_1_stride_1_iter_240
+ norm:10.585380769888166 
+ # of cat pixels:16739.0 
+ # of grass pixels:170761.0
+ Misprediction Count:21151
+ Change:0.03868105832732988
+
+
+Iter:lamda_1_stride_1_iter_245
+ norm:10.737996922936683 
+ # of cat pixels:16759.0 
+ # of grass pixels:170741.0
+ Misprediction Count:21140
+ Change:0.03855862557205215
+
+
+Iter:lamda_1_stride_1_iter_250
+ norm:10.88894726163661 
+ # of cat pixels:16772.0 
+ # of grass pixels:170728.0
+ Misprediction Count:21137
+ Change:0.03807474027105672
+
+
+Iter:lamda_1_stride_1_iter_255
+ norm:11.038627568510499 
+ # of cat pixels:16755.0 
+ # of grass pixels:170745.0
+ Misprediction Count:21147
+ Change:0.037392457852045646
+
+
+Iter:lamda_1_stride_1_iter_260
+ norm:11.187152274784209 
+ # of cat pixels:16766.0 
+ # of grass pixels:170734.0
+ Misprediction Count:21132
+ Change:0.036793832082069676
+
+
+Iter:lamda_1_stride_1_iter_265
+ norm:11.334302799132832 
+ # of cat pixels:16743.0 
+ # of grass pixels:170757.0
+ Misprediction Count:21160
+ Change:0.039361016495771374
+
+
+Iter:lamda_1_stride_1_iter_270
+ norm:11.480248225403669 
+ # of cat pixels:16766.0 
+ # of grass pixels:170734.0
+ Misprediction Count:21137
+ Change:0.03670299424980837
+
+
+Iter:lamda_1_stride_1_iter_275
+ norm:11.625101200336834 
+ # of cat pixels:16724.0 
+ # of grass pixels:170776.0
+ Misprediction Count:21171
+ Change:0.03660046618317315
+
+
+Iter:lamda_1_stride_1_iter_280
+ norm:11.768913275358234 
+ # of cat pixels:16712.0 
+ # of grass pixels:170788.0
+ Misprediction Count:21178
+ Change:0.0364801868670322
+
+
+Iter:lamda_1_stride_1_iter_285
+ norm:11.912083606417873 
+ # of cat pixels:16724.0 
+ # of grass pixels:170776.0
+ Misprediction Count:21170
+ Change:0.036644063120674884
+
+
+Iter:lamda_1_stride_1_iter_290
+ norm:12.054031886541223 
+ # of cat pixels:16753.0 
+ # of grass pixels:170747.0
+ Misprediction Count:21120
+ Change:0.035275984936836986
+
+
+Iter:lamda_1_stride_1_iter_295
+ norm:12.194529193799866 
+ # of cat pixels:16697.0 
+ # of grass pixels:170803.0
+ Misprediction Count:21188
+ Change:0.03763978406594269
+
+
+Iter:lamda_1_stride_1_iter_300
+ norm:12.333659829735842 
+ # of cat pixels:16730.0 
+ # of grass pixels:170770.0
+ Misprediction Count:21167
+ Change:0.03628047533707239
+Iter:lamda_1_stride_1_final
+ norm:12.333659829735842 
+ # of cat pixels:16730.0 
+ # of grass pixels:170770.0
+ Misprediction Count:21167

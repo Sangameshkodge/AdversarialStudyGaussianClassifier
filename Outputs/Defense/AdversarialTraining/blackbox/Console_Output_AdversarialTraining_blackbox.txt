@@ -1,0 +1,45 @@
+Namespace(attack_type='blackbox', stride=1)
+Inference without Adversarial Training
+Iter:NonAttackNonDefense
+ norm:0.0 
+ # of cat pixels:36344.0 
+ # of grass pixels:151156.0
+ Misprediction Count:18081
+Inference with Adversarial Training
+Iter:NonAttackDefenseNonOverlap
+ norm:0.0 
+ # of cat pixels:40408.0 
+ # of grass pixels:147092.0
+ Misprediction Count:21327
+
+
+Iter:lamda_1_stride_1_iter_5
+ norm:15.861733354862992 
+ # of cat pixels:2914.0 
+ # of grass pixels:184586.0
+ Misprediction Count:33370
+ Change:0.6773935557705606
+
+
+Iter:lamda_1_stride_1_iter_10
+ norm:16.049406384144945 
+ # of cat pixels:2473.0 
+ # of grass pixels:185027.0
+ Misprediction Count:33608
+ Change:0.07069299751464556
+
+
+Iter:lamda_1_stride_1_iter_15
+ norm:16.06916328391331 
+ # of cat pixels:2445.0 
+ # of grass pixels:185055.0
+ Misprediction Count:33630
+ Change:0.022654167738974558
+
+
+Max Iteration:16
+Iter:lamda_1_stride_1_final
+ norm:16.06916328391331 
+ # of cat pixels:2445.0 
+ # of grass pixels:185055.0
+ Misprediction Count:33630

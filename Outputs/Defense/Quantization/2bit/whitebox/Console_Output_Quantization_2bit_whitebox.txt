@@ -1,0 +1,87 @@
+Namespace(attack_type='whitebox', n_bits=2, quantize=True, stride=1)
+Inference with Quantization
+Iter:NonAttackDefense
+ norm:0.0 
+ # of cat pixels:38223.0 
+ # of grass pixels:149277.0
+ Misprediction Count:19546
+
+
+Iter:lamda_1_stride_1_iter_5
+ norm:17.157555530420467 
+ # of cat pixels:6724.0 
+ # of grass pixels:180776.0
+ Misprediction Count:28122
+ Change:2.997734327312018
+
+
+Iter:lamda_1_stride_1_iter_10
+ norm:19.645845549349097 
+ # of cat pixels:776.0 
+ # of grass pixels:186724.0
+ Misprediction Count:32745
+ Change:0.44055330399578335
+
+
+Iter:lamda_1_stride_1_iter_15
+ norm:20.057794353285278 
+ # of cat pixels:243.0 
+ # of grass pixels:187257.0
+ Misprediction Count:33004
+ Change:0.13847274971936469
+
+
+Iter:lamda_1_stride_1_iter_20
+ norm:20.210193704810163 
+ # of cat pixels:97.0 
+ # of grass pixels:187403.0
+ Misprediction Count:33074
+ Change:0.0734552702025548
+
+
+Iter:lamda_1_stride_1_iter_25
+ norm:20.282230331374375 
+ # of cat pixels:51.0 
+ # of grass pixels:187449.0
+ Misprediction Count:33101
+ Change:0.04956890191326166
+
+
+Iter:lamda_1_stride_1_iter_30
+ norm:20.32029454557659 
+ # of cat pixels:23.0 
+ # of grass pixels:187477.0
+ Misprediction Count:33118
+ Change:0.03198736916512356
+
+
+Iter:lamda_1_stride_1_iter_35
+ norm:20.33922959714611 
+ # of cat pixels:15.0 
+ # of grass pixels:187485.0
+ Misprediction Count:33122
+ Change:0.02245474856674586
+
+
+Iter:lamda_1_stride_1_iter_40
+ norm:20.351529264469264 
+ # of cat pixels:7.0 
+ # of grass pixels:187493.0
+ Misprediction Count:33130
+ Change:0.018007714514997053
+
+
+Iter:lamda_1_stride_1_iter_45
+ norm:20.358460505287358 
+ # of cat pixels:3.0 
+ # of grass pixels:187497.0
+ Misprediction Count:33134
+ Change:0.012039009570254106
+
+
+Max Iteration:48
+Iter:lamda_1_stride_1_final
+ norm:20.36009395889162 
+ # of cat pixels:1.0 
+ # of grass pixels:187499.0
+ Misprediction Count:33134

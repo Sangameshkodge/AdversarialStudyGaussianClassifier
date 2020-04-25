@@ -1,0 +1,45 @@
+Namespace(attack_type='blackbox', n_bits=8, quantize=True, stride=1)
+Inference without Quantization
+Iter:NonAttackNonDefense
+ norm:0.0 
+ # of cat pixels:36344.0 
+ # of grass pixels:151156.0
+ Misprediction Count:18081
+Inference with Quantization
+Iter:NonAttackDefense
+ norm:0.0 
+ # of cat pixels:37702.0 
+ # of grass pixels:149798.0
+ Misprediction Count:19496
+
+
+Iter:lamda_1_stride_1_iter_5
+ norm:15.861733354862992 
+ # of cat pixels:1204.0 
+ # of grass pixels:186296.0
+ Misprediction Count:33018
+ Change:0.6773935557705606
+
+
+Iter:lamda_1_stride_1_iter_10
+ norm:16.049406384144945 
+ # of cat pixels:897.0 
+ # of grass pixels:186603.0
+ Misprediction Count:33186
+ Change:0.07069299751464556
+
+
+Iter:lamda_1_stride_1_iter_15
+ norm:16.06916328391331 
+ # of cat pixels:891.0 
+ # of grass pixels:186609.0
+ Misprediction Count:33186
+ Change:0.022654167738974558
+
+
+Max Iteration:16
+Iter:lamda_1_stride_1_final
+ norm:16.06916328391331 
+ # of cat pixels:891.0 
+ # of grass pixels:186609.0
+ Misprediction Count:33186

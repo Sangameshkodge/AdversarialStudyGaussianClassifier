@@ -27,7 +27,7 @@ parser = argparse.ArgumentParser(description='Defense for CW attack on Gaussian 
 parser.add_argument('--n_bits',              default=1,      type=int,     help='Number of bits of quantization')
 parser.add_argument('--quantize',            default=True,    type=str2bool,   help='Source Model')
 parser.add_argument('--stride',              default=1,    type=int,   help='1 for overlapping case 8 for non overlapping case')
-parser.add_argument('--attack_type',         default='whitebox',    type=str,   help='blackbox and whitebox attacks')
+parser.add_argument('--attack_type',         default='blackbox',    type=str,   help='blackbox and whitebox attacks')
 global args
 args = parser.parse_args()
 print(args)

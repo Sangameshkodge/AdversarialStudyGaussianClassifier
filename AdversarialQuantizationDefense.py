@@ -12,7 +12,7 @@ from attack import CW_attack_fast
 from utils import display_image, mean_cov
 from defense import Quantize
 import argparse
-from defense import Adv_training_data
+from defense import Adv_training_data_CW,Adv_training_data_PGD
 
 def str2bool(v):
     if isinstance(v, bool):
@@ -24,6 +24,7 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 parser = argparse.ArgumentParser(description='Defense for CW attack on Gaussian classifier', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument('--train',              default='PGD',    type=str,   help='PGD for training with PGD CW for CW')
 parser.add_argument('--n_bits',              default=1,      type=int,     help='Number of bits of quantization')
 parser.add_argument('--quantize',            default=True,    type=str2bool,   help='Source Model')
 parser.add_argument('--stride',              default=1,    type=int,   help='1 for overlapping case 8 for non overlapping case')
@@ -32,6 +33,12 @@ global args
 args = parser.parse_args()
 print(args)
 
+if args.train=='CW':
+     Adv_training_data = Adv_training_data_CW
+elif args.train=='PGD':
+    Adv_training_data = Adv_training_data_PGD
+else:
+    raise ValueError
 
 #loading the training dataset
 train_cat=np.matrix(np.loadtxt('./dataset/train_cat.txt',delimiter=','))
@@ -117,7 +124,7 @@ elif args.attack_type.lower() == 'blackbox':
                   truth = truth,
                   title="NonAttackNonDefense", 
                   stride=args.stride,
-                  path="./Outputs/Defense/AdversarialQuantize/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
+                  path="./Outputs/Defense/AdversarialQuantize/"+args.train+'/'+str(args.n_bits)+'bit/'+args.attack_type+'/',
                   infer=True) 
 else:
     raise ValueError
@@ -135,7 +142,7 @@ display_image(img_perturbed = Y,
               truth = truth,
               title="NonAttackDefense", 
               stride=args.stride,
-              path="./Outputs/Defense/AdversarialQuantize/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
+              path="./Outputs/Defense/AdversarialQuantize/"+args.train+'/'+str(args.n_bits)+'bit/'+args.attack_type+'/',
               infer=True,
               preprocessing=q1)  
 
@@ -172,7 +179,7 @@ for i in range(len(display)):
                                       stride=stride, 
                                       title="lamda_{}_stride_{}_".format(l,stride), 
                                       preprocessing=[None,None],
-                                      path="./Outputs/Defense/AdversarialQuantize/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
+                                      path="./Outputs/Defense/AdversarialQuantize/"+args.train+'/'+str(args.n_bits)+'bit/'+args.attack_type+'/',
                                       attack_type=args.attack_type)
     
     display_image(img_perturbed = img_perturbed,  
@@ -186,7 +193,7 @@ for i in range(len(display)):
                   truth = truth,
                   title="lamda_{}_stride_{}_final".format(l,stride), 
                   stride=stride, 
-                  path="./Outputs/Defense/AdversarialQuantize/"+str(args.n_bits)+'bit/'+args.attack_type+'/',
+                  path="./Outputs/Defense/AdversarialQuantize/"+args.train+'/'+str(args.n_bits)+'bit/'+args.attack_type+'/',
                   preprocessing=None)     
 
 

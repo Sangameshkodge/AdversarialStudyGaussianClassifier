@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from attack import CW_attack_fast
 from utils import display_image, mean_cov
-from defense import Adv_training_data
+from defense import Adv_training_data_CW, Adv_training_data_PGD
 import argparse
 
 def str2bool(v):
@@ -23,13 +23,19 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 parser = argparse.ArgumentParser(description='Defense for CW attack on Gaussian classifier', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument('--train',              default='PGD',    type=str,   help='PGD for training with PGD CW for CW')
 parser.add_argument('--stride',              default=1,    type=int,   help='1 for overlapping case 8 for non overlapping case')
 parser.add_argument('--attack_type',         default='blackbox',    type=str,   help='blackbox and whitebox attacks')
 global args
 args = parser.parse_args()
 print(args)
 
-
+if args.train=='CW':
+     Adv_training_data = Adv_training_data_CW
+elif args.train=='PGD':
+    Adv_training_data = Adv_training_data_PGD
+else:
+    raise ValueError
 #loading the training dataset
 train_cat=np.matrix(np.loadtxt('./dataset/train_cat.txt',delimiter=','))
 train_grass=np.matrix(np.loadtxt('./dataset/train_grass.txt',delimiter=','))
@@ -113,7 +119,7 @@ elif args.attack_type.lower() == 'blackbox':
                   truth = truth,
                   title="NonAttackNonDefense", 
                   stride=args.stride,
-                  path="./Outputs/Defense/AdversarialTraining/"+args.attack_type+'/',
+                  path="./Outputs/Defense/AdversarialTraining/"+args.train+'/'+args.attack_type+'/',
                   save=True, 
                   infer=True) 
 else:
@@ -133,7 +139,7 @@ display_image(img_perturbed = Y,
               title="NonAttackDefenseNonOverlap", 
               stride=args.stride,
               save=True, 
-              path="./Outputs/Defense/AdversarialTraining/"+args.attack_type+"/",
+              path="./Outputs/Defense/AdversarialTraining/"+args.train+'/'+args.attack_type+"/",
               infer=True)  
 # non overlaping
 stride = args.stride 
@@ -166,7 +172,7 @@ for i in range(len(display)):
                                       display_iter=disp, 
                                       stride=stride, 
                                       title="lamda_{}_stride_{}_".format(l,stride),
-                                      path="./Outputs/Defense/AdversarialTraining/"+args.attack_type+"/"
+                                      path="./Outputs/Defense/AdversarialTraining/"+args.train+'/'+args.attack_type+"/"
                                     )
     
     display_image(img_perturbed = img_perturbed, 
@@ -180,6 +186,6 @@ for i in range(len(display)):
                   truth = truth,
                   title="lamda_{}_stride_{}_final".format(l,stride), 
                   stride=stride, 
-                  path="./Outputs/Defense/AdversarialTraining/"+args.attack_type+"/"
+                  path="./Outputs/Defense/AdversarialTraining/"+args.train+'/'+args.attack_type+"/"
               )     
 

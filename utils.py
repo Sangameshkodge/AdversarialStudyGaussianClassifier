@@ -67,7 +67,7 @@ def inference_fast(img, mean_cat, cov_cat, pi_cat, mean_grass, cov_grass, pi_gra
     return output
 
 # Carlini Wagner attack
-def gradient(patch_vec_k, patch_vec_0, mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, W_cat, w_cat, w_0_cat, W_grass, w_grass, w_0_grass, l=5, target_index=1):
+def gradient_CW(patch_vec_k, patch_vec_0, mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, W_cat, w_cat, w_0_cat, W_grass, w_grass, w_0_grass, l=5, target_index=1):
     g_cat = discriminant(patch_vec_k,mean_cat,cov_cat,pi_cat)
     g_grass = discriminant(patch_vec_k,mean_grass,cov_grass,pi_grass)
     if target_index==0:
@@ -93,8 +93,25 @@ def gradient(patch_vec_k, patch_vec_0, mean_cat, cov_cat, pi_cat, mean_grass,cov
     grad = np.where( (g_target>g_not_target).T, grad, 2*(patch_vec_k-patch_vec_0)+ l*((np.matmul(W_not_target - W_target,patch_vec_k) + w_not_target-w_target)) )
     return grad
 
+def gradient_FGSM(patch_vec_k, patch_vec_0, mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, W_cat, w_cat, w_0_cat, W_grass, w_grass, w_0_grass, target_index=1):
+    if target_index==0:
+        W_target = W_cat
+        w_target = w_cat
+        W_not_target = W_grass
+        w_not_target = w_grass
+    
+    elif target_index==1: 
+        W_not_target = W_cat
+        w_not_target = w_cat
+        W_target = W_grass
+        w_target = w_grass
+    else:
+        raise ValueError ("Unsupported Target Index {}. Expect it to be 0 or 1 ".format(target_index))
+    grad = np.sign((np.matmul(W_not_target - W_target,patch_vec_k) + w_not_target-w_target))
+    return grad
+
 #function that analysis the data and displays the images
-def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, original_img, truth, path="./Outputs/",title='', stride = 8, save=True, infer=False, preprocessing=None):
+def display_image(img_perturbed,  mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, original_img, truth, path="./Outputs/rough/",title='', stride = 8, save=True, infer=False, preprocessing=None):
     
     if preprocessing !=None:
         img_perprocessed = preprocessing.forward(img_perturbed)

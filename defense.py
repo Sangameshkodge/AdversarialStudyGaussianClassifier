@@ -6,7 +6,7 @@ Created on Sun Apr 19 18:08:13 2020
 @author: skodge
 """
 import numpy as np 
-from utils import gradient, get_parameters, parallel, unparallel_grad
+from utils import gradient_CW, gradient_FGSM, get_parameters, parallel, unparallel_grad
 from scipy.signal import convolve2d
 
 
@@ -63,12 +63,12 @@ class Halftone_image():
             
         return img_ht
     
-def Adv_training_data(training_data, mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, l=5, target_index=1, stride=8, alpha=0.0001):
+def Adv_training_data_CW(training_data, mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, l=5, target_index=1, stride=8, alpha=0.0001):
     perturbed_data_k = training_data 
     W_cat, w_cat, w_0_cat = get_parameters(mean_cat,cov_cat, pi_cat)
     W_grass, w_grass, w_0_grass = get_parameters(mean_grass,cov_grass, pi_grass)
     for i in range(300):
-        current_grad = gradient(patch_vec_k= perturbed_data_k,
+        current_grad = gradient_CW(patch_vec_k= perturbed_data_k,
                                 patch_vec_0=training_data,
                                 mean_cat=mean_cat, 
                                 cov_cat=cov_cat, 
@@ -91,3 +91,30 @@ def Adv_training_data(training_data, mean_cat, cov_cat, pi_cat, mean_grass,cov_g
             break
     return perturbed_data_k_1
 
+def Adv_training_data_PGD(training_data, mean_cat, cov_cat, pi_cat, mean_grass,cov_grass, pi_grass, l=5, target_index=1, stride=8, alpha=0.0001):
+    perturbed_data_k = training_data 
+    W_cat, w_cat, w_0_cat = get_parameters(mean_cat,cov_cat, pi_cat)
+    W_grass, w_grass, w_0_grass = get_parameters(mean_grass,cov_grass, pi_grass)
+    for i in range(300):
+        current_grad = gradient_FGSM(patch_vec_k= perturbed_data_k,
+                                patch_vec_0=training_data,
+                                mean_cat=mean_cat, 
+                                cov_cat=cov_cat, 
+                                pi_cat=pi_cat, 
+                                mean_grass=mean_grass,
+                                cov_grass=cov_grass, 
+                                pi_grass=pi_grass,
+                                W_cat=W_cat,
+                                w_cat=w_cat,
+                                w_0_cat=w_0_cat,
+                                W_grass=W_grass,
+                                w_grass=w_grass,
+                                w_0_grass=w_0_grass,
+                                l=l, 
+                                target_index=target_index)
+        perturbed_data_k_1 = np.clip(perturbed_data_k - alpha * current_grad,0,1)
+        change = np.linalg.norm((perturbed_data_k_1-perturbed_data_k))  
+        perturbed_data_k = perturbed_data_k_1
+        if  change < 0.001/(2850):
+            break
+    return perturbed_data_k_1
